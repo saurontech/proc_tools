@@ -1,5 +1,7 @@
 #include "proc_tools.h"
 
+// TCP_ESTABLISHED = 1,
+// TCP_LISTEN = 10
 int __search_lport_stat_inode(int ipfamily, unsigned short port,  unsigned short stat, ino_t *out)
 {
 	FILE *fp;
