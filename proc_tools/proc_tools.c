@@ -200,9 +200,11 @@ int __cmd_inode_search_pid(char * cmd, ino_t inode, char * buf, int buflen, int 
 	struct stat sb;
 	long pid; //pid is signed on linux
 
+
 	dir = opendir("/proc");
+
 	if(!dir){
-		printf("Can't open /proc");
+	//	printf("Can't open /proc");
 		return -1;
 	}
 
@@ -242,7 +244,7 @@ int __cmd_inode_search_pid(char * cmd, ino_t inode, char * buf, int buflen, int 
 				*pidret = (pid_t)pid;
 				return 0;
 			}else{
-			//	printf("pid %dcmd %s\n", pid, cmd);
+//				printf("pid %dcmd %s\n", pid, cmd);
 			}
 		}
 	}

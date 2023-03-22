@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include "proc_tools.h"
 
+#define LOOP
+
 #ifdef LOOP
 struct _cmd_info{
 	int active;
@@ -38,8 +40,8 @@ int main(int argc, char *argv[])
 		}else{
 			printf("no inode %s\n", argv[i]);
 #ifdef LOOP
-			if(cmds[i].active){
-				printf("reactivate %s\n", cmds[i].cmd);
+			if(cmds[i - 1].active){
+				printf("reactivate %s\n", cmds[i - 1].cmd);
 			}
 #endif
 			continue;
@@ -50,16 +52,23 @@ int main(int argc, char *argv[])
 					&pid)){
 			printf("no ps operating %s\n", argv[i]);
 #ifdef LOOP
-			if(cmds[i].active){
-				printf("reactivate %s\n", cmds[i].cmd);
+			if(cmds[i - 1].active){
+				printf("reactivate %s\n", cmds[i -1].cmd);
 			}
 #endif
 			continue;
 		}
 #ifdef LOOP
-		cmds[i].active = 1;
-		memcpy(cmds[i].cmd, cmd, cmdlen);
-		cmds[i].cmd[cmdlen] = '\0';
+		int j;
+		cmds[i -1].active = 1;
+		memcpy(cmds[i-1].cmd, cmd, cmdlen);
+		for(j = 0; j < cmdlen; j++){
+			if(cmds[i - 1].cmd[j] == '\0'){
+				cmds[i - 1].cmd[j] = ' ';
+			}
+		}
+		cmds[i -1].cmd[cmdlen] = '\0';
+//		printf("after adjust %s\n", cmds[i -1].cmd);
 #endif	
 		printf("%s operating %s\n", cmd, argv[i]);
 	}
