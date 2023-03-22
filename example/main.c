@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include "proc_tools.h"
 
-#define LOOP
+//#define LOOP
 
 #ifdef LOOP
 struct _cmd_info{
